@@ -113,7 +113,14 @@ public class MainActivity extends AppCompatActivity {
 
                             // http://127.0.0.1:10001/api/hello
 
-                            String de = NetUtil.getMessage("http://47.100.207.253:10001/api/encode?key=你好hxad");
+                            //单次最长加密长度
+                            //明文bytes===>214
+                            //明文长度===>130
+                            String clear_txt = "你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你在吗22000000000000xxxxxxxxxxtttttttttt11111111113333333333888888888844444444440000000000zzzz";
+                            Vlog.log("明文bytes===>" + clear_txt.getBytes().length);
+                            Vlog.log("明文长度===>" + clear_txt.length());
+
+                            String de = NetUtil.getMessage("http://47.100.207.253:10001/api/encode?key="+clear_txt);
 
                             Vlog.log("服务加密后===>"+de);
 
