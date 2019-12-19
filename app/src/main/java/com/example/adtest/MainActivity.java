@@ -113,6 +113,9 @@ public class MainActivity extends AppCompatActivity {
 
                             // http://127.0.0.1:10001/api/hello
 
+                            String local_ip = "192.168.1.127";
+                            String remote_ip = "47.100.207.253";
+
                             //单次最长加密长度
                             //明文bytes===>214
                             //明文长度===>130
@@ -120,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                             Vlog.log("明文bytes===>" + clear_txt.getBytes().length);
                             Vlog.log("明文长度===>" + clear_txt.length());
 
-                            String de = NetUtil.getMessage("http://47.100.207.253:10001/api/encode?key="+clear_txt);
+                            String de = NetUtil.getMessage("http://" + local_ip + ":10001/api/encode?key="+clear_txt);
 
                             Vlog.log("服务加密后===>"+de);
 
@@ -134,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
 
                             Vlog.log("本地url_en===>"+url_en);
 
-                            String d_de_str = NetUtil.getMessage("http://47.100.207.253:10001/api/decode?txt="+ url_en);
+                            String d_de_str = NetUtil.getMessage("http://" + local_ip + ":10001/api/decode?txt="+ url_en);
 
                             Vlog.log("服务解密后===>"+d_de_str);
 
