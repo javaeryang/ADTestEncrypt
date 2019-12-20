@@ -113,15 +113,17 @@ public class MainActivity extends AppCompatActivity {
 
                             // http://127.0.0.1:10001/api/hello
 
-                            String local_ip = "192.168.1.127";
+                            String local_ip = "192.168.1.123";
                             String remote_ip = "47.100.207.253";
 
                             //单次最长加密长度
                             //明文bytes===>214
                             //明文长度===>130
-                            String clear_txt = "你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你在吗22000000000000xxxxxxxxxxtttttttttt11111111113333333333888888888844444444440000000000zzzz";
+                            String clear_txt = "testkey";
                             Vlog.log("明文bytes===>" + clear_txt.getBytes().length);
                             Vlog.log("明文长度===>" + clear_txt.length());
+
+                            clear_txt = URLEncoder.encode(clear_txt, "utf-8");
 
                             String de = NetUtil.getMessage("http://" + local_ip + ":10001/api/encode?key="+clear_txt);
 
@@ -140,6 +142,31 @@ public class MainActivity extends AppCompatActivity {
                             String d_de_str = NetUtil.getMessage("http://" + local_ip + ":10001/api/decode?txt="+ url_en);
 
                             Vlog.log("服务解密后===>"+d_de_str);
+
+                            Vlog.log("====================================================================>");
+
+                            String en_local = RSA.encryptByPublic(clear_txt, publicKey);
+
+                            Vlog.log("本地加密===>"+en_local);
+
+                            en_local = URLEncoder.encode(en_local, "utf-8");
+
+                            String result = NetUtil.getMessage("http://" + local_ip + ":10001/api/core/decrypt?code="+en_local);
+
+                            Vlog.log("返回结果===>"+result);
+
+
+                            Vlog.log("====================================================================>");
+
+
+                            String savePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/mt.apk";
+
+                            if (NetUtil.download(savePath, "http://" + local_ip + ":10001/api/core/download?code="+en_local)){
+                                Vlog.log("下载成功===>");
+                            }else {
+                                Vlog.log("下载失败===>");
+                            }
+
 
 //                            String en = "O8Mitqlsq+bouWNPttuAgTSLZt6NNv7IAfGcHsTJ6qGFQB0k47PC6BwRFCteJDP5JmMzWVYuJY9Xbd8k85/bZQBtMmdGafuqjul7fdePDC5O+SrdkUJ0Md9+hubT1K11wZWRsSm8R71K2iRF/QhV80xvqRgLNHWkk2/lAs9wBB24JZbUI3/i/XVAt+ymGRgXwAlEeuU3nbhBFg2H01N+UGw0fVc70VlPTd7Q0qDzDA52ICzQbkSR3olIMSvqm8AZ4oe5Hmue3Mz7VdhYTtGKeJGLo7316Iu8k7qsAtYwk8BgP6rma4rQF7wN//sWWN2vmCXkJMeUXHEztIpqp62Vyg==";
 //
