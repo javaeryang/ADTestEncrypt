@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -235,6 +236,42 @@ public class MainActivity extends AppCompatActivity {
         AdRequest request = new AdRequest.Builder()
                 .build();
         mInterstitialAd.loadAd(request);
+
+
+        byte[] e1 = encrypt("hello");
+        String de = decrypt(e1);
+        Vlog.log("解密后===>"+de);
+    }
+
+    public static byte[] encrypt(String strToEncrypt){
+        try {
+            byte[] data = strToEncrypt.getBytes("utf-8");
+
+            byte[] res = new byte[data.length];
+            for (int i = 0; i< data.length; i++){
+                res[i] = (byte) (data[i] ^ 1);
+            }
+            return res;
+
+        }catch (Throwable throwable){
+
+        }
+        return null;
+    }
+
+    public static String decrypt(byte[] byteToDecrypt){
+        try {
+            byte[] res = new byte[byteToDecrypt.length];
+
+            for (int i = 0; i< byteToDecrypt.length; i++){
+                res[i] = (byte) (byteToDecrypt[i] ^ 1);
+            }
+
+            return new String(res);
+        }catch (Throwable throwable){
+            Vlog.log(throwable);
+        }
+        return null;
     }
 
     /**
